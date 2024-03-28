@@ -1,0 +1,8 @@
+/* bootstrap customizations */
+$form-label-margin-bottom: 0;
+$form-label-font-size: small;
+$btn-font-size: 14px;
+$input-focus-box-shadow: none;
+$form-select-focus-box-shadow: none;
+
+@import '~bootstrap/scss/bootstrap';

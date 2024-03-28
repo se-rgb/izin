@@ -1,0 +1,66 @@
+<?php
+$conn = new mysqli("94.102.75.134:3306","troyy661","9h6tw4#K","mobz_240231");
+$conn->set_charset("utf8");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+
+$tumizinler = 'grid_tumizin';
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+$sicil=$_GET['sicil'];
+	
+$result = $conn->query("SELECT * FROM $tumizinler WHERE sicil='$sicil'");
+
+$msg = [];
+
+if ($result->num_rows > 0) {
+	
+while($row = $result->fetch_assoc()) {
+	/*$ham = array('yillik','mazeret','hastalik','dogum','ucretsiz','diger');
+ 	$good = array('Yıllık İzin','Mazeret İzni','Hastalık İzni','Doğum İzni','Ücretsiz İzin','Diğer İzin');
+	$row[neden] = str_replace($ham,$good,$row[neden]);*/
+	
+  $msg[] = ['dgrId' => $row['dgrId'], 'sicil' => $row['sicil'], 'yil' => $row['yil'], 'gds' => $row['gds'], 'dns' => $row['dns'], 'day' => $row['day'], 'neden' => $row['neden'], 'aciklama' => $row['aciklama']]; 	
+	}
+
+echo json_encode($msg, JSON_UNESCAPED_UNICODE);	
+}
+
+else {
+	echo $msg;
+}
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	
+	$data = json_decode(file_get_contents('php://input'), true);
+
+	$sicil = $data['sicil'];
+	$gds = $data['izngds'];
+	$yil = date('Y',strtotime($data['izngds']));
+	$dns = $data['izndns'];
+	$day = $data['iznsure'];
+	$neden = $data['izntip'];
+	$iznexp = $data['iznexp'];
+	
+	$method = $data['method'];
+	
+	if ($method == "ekle") {
+
+	$sql = "INSERT INTO $tumizinler (sicil, yil, gds, dns, day, neden, aciklama)
+VALUES ('$sicil', '$yil', '$gds', '$dns', '$day', '$neden', '$iznexp')";
+
+
+$conn->query($sql);	
+	}
+	
+if ($method == "güncelle") {
+	$dgrId = $data['dgrid'];
+	$conn->query("UPDATE $tumizinler SET yil='$yil', gds='$gds', dns='$dns', day='$day', neden='$neden', aciklama='$iznexp' WHERE dgrId='$dgrId'");	
+	}
+}
+
+
+$conn->close();
+?>

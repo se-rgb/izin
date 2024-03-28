@@ -1,0 +1,18 @@
+
+@import 'custom';
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 14px;
+}
+
+.ag-theme-quartz {
+    --ag-header-column-separator-display: none;
+    --ag-header-column-resize-handle-display: none;
+    --ag-row-hover-color:#eee;
+    --ag-font-family: 'Segoe UI', sans-serif;
+}
+
+.form-select option:hover {
+    background-color: #198754;
+}
