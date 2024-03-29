@@ -74,9 +74,15 @@ const Izin = () => {
         <div className='w-50'>
             <select className="form-select" value={tip} onChange={(e) => setTip(e.target.value)}>
               {method=="ekle" && <option className="dropdown-item" value=''>İzin türü seçiniz</option>}
-              {paramData && Object.entries(paramData.izintur).map(([key,value]) => 
+              <option className="dropdown-item" value='yillik'>Yıllık İzin</option>
+              <option className="dropdown-item" value='mazeret'>Mazeret İzni</option>
+              <option className="dropdown-item" value='ucretsiz'>Ücretsiz İzin</option>
+              <option className="dropdown-item" value='dogum'>Doğum İzni</option>
+              <option className="dropdown-item" value='hastalik'>Hastalık İzni</option>
+              <option className="dropdown-item" value='diger'>Diğer İzin</option>
+              {/*paramData && Object.entries(paramData.izintur).map(([key,value]) => 
               <option className="dropdown-item" key={key} value={key}>{value}</option>
-              )}
+              )*/}
             </select>
             <div className="mb-3">
               <label className="form-label">Gidiş Tarihi</label>
